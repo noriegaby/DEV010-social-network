@@ -10,14 +10,17 @@ const auth = getAuth(app);
 
 import home from './home.js'; // Importa la función home como valor predeterminado
 import createUser from './createUser.js'; 
-
-
+import error from './error.js';
+import resPass from './resPass.js';
 
 const routes = [
   { path: '/', component: home },
   { path: '/createUser', component: createUser },
+  { path: '/error', component:error},
+  { path: '/resPass', component:resPass}
 
 ];
+
 
 const defaultRoute = '/';
 const root = document.getElementById('root');

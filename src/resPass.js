@@ -1,5 +1,3 @@
-//Pendiente cambiar de boton a <a>  
-
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 function resPass(navigateTo) {
@@ -12,10 +10,12 @@ function resPass(navigateTo) {
   const errorParagraph = document.createElement('p');
 
   title.textContent = 'Restablece tu contraseña';
+
   inputEmail.setAttribute('type', 'email');
   inputEmail.placeholder = 'Correo';
 
   buttonRest.textContent = 'Restablecer contraseña';
+  
 
   buttonRest.addEventListener('click', async (e) => {
     e.preventDefault(); // Evita que el formulario se envíe automáticamente
@@ -27,7 +27,7 @@ function resPass(navigateTo) {
       errorParagraph.textContent = 'Por favor, ingresa tu correo.';
       return;
     }
-    // AGREGAR EL setTimeout
+
     try {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
@@ -44,8 +44,8 @@ function resPass(navigateTo) {
     navigateTo('/');
   });
 
-  form.append(inputEmail, buttonRest);
-  section.append(title, form, errorParagraph, buttonReturn);
+  form.append(inputEmail,document.createElement('br'), buttonRest);
+  section.append(title, form,document.createElement('br'), errorParagraph, buttonReturn);
 
   return section;
 }

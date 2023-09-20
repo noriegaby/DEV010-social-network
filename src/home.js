@@ -12,12 +12,13 @@ function home(navigateTo) {
     const googleLoginButton = createButtonWithIcon('Sign in with Google', 'G.png', () => handleGoogleLogin());
     googleLoginButton.classList.add('google-login-button'); 
     const createUserButton = createButton('Crear cuenta nueva', () => navigateTo('/createUser'));
-    const resetPasswordButton = createButton('Olvidé mi contraseña', () => { navigateTo('/resPass'); });
-  
-    //Alerta de error
-    const errorParagraph = document.createElement('p');
-    errorParagraph.style.color = 'grey'; // Establece el color del mensaje de error
+    const resetPasswordLink = document.createElement('a');
+    resetPasswordLink.textContent = '¿Olvidaste tu contraseña?';
+    resetPasswordLink.addEventListener('click', () => { navigateTo('/resPass'); });
 
+    const errorParagraph = document.createElement('p');
+    errorParagraph.style.color = 'black'; // Establece el color del mensaje de error
+     
     title.textContent = 'Iniciar Sesión';
 
     function createInput(type, placeholder) {
@@ -26,7 +27,7 @@ function home(navigateTo) {
         input.placeholder = placeholder;
         return input;
     }
-    
+
     function createButton(text, onClick) {
         const button = document.createElement('button');
         button.textContent = text;
@@ -54,7 +55,7 @@ function home(navigateTo) {
           errorParagraph.textContent = 'Por favor, completa todos los campos.';
           return;
         }
- // AGREGAR EL setTimeout
+      
         try {
           const auth = getAuth();
           signInWithEmailAndPassword(auth, email, password) // Cambiado a signInWithEmailAndPassword
@@ -79,9 +80,10 @@ function home(navigateTo) {
         }
       }      
 
+    
     form.append(inputEmail, document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), submitButton);
   
-    section.append(title, document.createElement('br'), form, document.createElement('br'), createUserButton, document.createElement('br'), document.createElement('br'), googleLoginButton, errorParagraph, resetPasswordButton);
+    section.append(title, document.createElement('br'), form, document.createElement('br'), createUserButton, document.createElement('br'), document.createElement('br'), googleLoginButton, errorParagraph, resetPasswordLink);
 
     return section;
 }

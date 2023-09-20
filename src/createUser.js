@@ -32,7 +32,7 @@ function createUser(navigateTo) {
       errorParagraph.textContent = 'Por favor, completa todos los campos.';
       return;
     }
- // AGREGAR EL setTimeout
+
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
