@@ -17,7 +17,7 @@ function home(navigateTo) {
     });
 
     buttonGoogleLogin.textContent = 'Ingresar con Google';
-    buttonGoogleLogin.classList.add('google-login-button');
+    buttonGoogleLogin.classList.add('google-login-button2');
     buttonGoogleLogin.addEventListener('click', () => {
         navigateTo('/loginGoogle');
     });

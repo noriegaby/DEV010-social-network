@@ -10,8 +10,11 @@ function createUser(navigateTo) {
   const inputName = document.createElement('input');
   const buttonRegister = document.createElement('button');
 
+  
   inputName.placeholder = 'Nombre';
+  inputEmail.setAttribute('type', 'email');
   inputEmail.placeholder = 'Correo';
+  inputPass.setAttribute('type', 'password');
   inputPass.placeholder = 'Contraseña';
 
   title.textContent = 'Regístrate';
@@ -47,8 +50,8 @@ function createUser(navigateTo) {
 
   });
 
-  form.append(inputName, inputEmail, inputPass, buttonRegister);
-  section.append(title, form, buttonReturn);
+  form.append(inputName,document.createElement('br'), inputEmail, document.createElement('br'), inputPass,document.createElement('br'),document.createElement('br'), buttonRegister);
+  section.append(title, form,document.createElement('br'), buttonReturn);
 
   return section;
 }
