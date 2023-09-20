@@ -51,16 +51,17 @@ function home(navigateTo) {
         const password = inputPass.value;
       
         if (email === '' || password === '') {
-          // Verifica si algún campo está vacío y muestra un mensaje de error
-          errorParagraph.textContent = 'Por favor, completa todos los campos.';
-          return;
-        }
-      
+            // Verifica si algún campo está vacío y muestra un mensaje de error después de 5 segundos
+            setTimeout(() => {
+              errorParagraph.textContent = 'Por favor, completa todos los campos.';
+            }, 5000); //  5000 milisegundos (5 segundos)
+            return;
+          }
         try {
           const auth = getAuth();
           signInWithEmailAndPassword(auth, email, password) // Cambiado a signInWithEmailAndPassword
             .then((userCredential) => {
-              // El usuario ha iniciado sesión con éxito, puedes redirigir o actualizar la interfaz de usuario según sea necesario
+              // El usuario ha iniciado sesión con éxito, 
               const user = userCredential.user;
               alert('Usuario ha iniciado sesión con éxito: ' + user.email);
       
@@ -68,22 +69,18 @@ function home(navigateTo) {
               inputEmail.value = '';
               inputPass.value = '';
             })
-            .catch((error) => {
-              // Manejar errores de inicio de sesión
-              console.error('Error de inicio de sesión:', error.message);
-              errorParagraph.textContent = 'Error de inicio de sesión: ' + error.message;
-            });
+            
         } catch (error) {
           // Manejar otros errores
           console.error('Error:', error.message);
           errorParagraph.textContent = 'Error: ' + error.message;
-        }
-      }      
-
+            }
     
-    form.append(inputEmail, document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), submitButton);
+    };      
+
+    form.append(inputEmail, document.createElement('br'),document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), submitButton);
   
-    section.append(title, document.createElement('br'), form, document.createElement('br'), createUserButton, document.createElement('br'), document.createElement('br'), googleLoginButton, errorParagraph, resetPasswordLink);
+    section.append(title, document.createElement('br'), form, document.createElement('br'), createUserButton, document.createElement('br'), googleLoginButton,  errorParagraph,  resetPasswordLink);
 
     return section;
 }
