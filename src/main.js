@@ -9,18 +9,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 import home from './home.js'; // Importa la función home como valor predeterminado
-import login from './login.js'; // Importa la función login como valor predeterminado
-import error from './error.js'; // Importa la función error como valor predeterminado
-import loginGoogle from './loginGoogle.js'; // Importa la función error como valor predeterminado
-import createUser from './createUser.js'; // Importa la función createUser como valor predeterminado desde new.js
+import createUser from './createUser.js'; 
+
 
 
 const routes = [
   { path: '/', component: home },
-  { path: '/login', component: login },
-  { path: '/error', component: error },
   { path: '/createUser', component: createUser },
-  { path: '/loginGoogle', component: loginGoogle },
 
 ];
 
