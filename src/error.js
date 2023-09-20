@@ -5,4 +5,3 @@ function error() {
   }
   
   export default error; // Exporta la función error como valor predeterminado
-  
