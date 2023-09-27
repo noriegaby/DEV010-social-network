@@ -1,8 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getDatabase, ref, get } from 'firebase/database';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -13,9 +11,16 @@ export const firebaseConfig = {
   storageBucket: "red-social-foodgram.appspot.com",
   messagingSenderId: "58476164637",
   appId: "1:58476164637:web:6fb6498cc1a4126f49b8f4",
-  measurementId: "G-NSK3289BQS"
+  measurementId: "G-NSK3289BQS",
+  databaseURL: "https://red-social-foodgram-default-rtdb.firebaseio.com/",
 };
 
-// Initialize Firebase
+// Inicializa Firebase con la configuración
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Obtén una instancia de Firebase Realtime Database
+const db = getDatabase(app);
+
+export {db}; // Exporta la instancia de Firebase Realtime Database
+
+
