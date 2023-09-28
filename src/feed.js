@@ -1,45 +1,35 @@
-// Primero, define la función navigateTo
-function navigateTo(url) {
-    window.location.href = url;
-}
+import { collection, addDoc } from "firebase/firestore";
 
-import { db } from './firebase.js';
-import { getDatabase, ref, get } from 'firebase/database';
+  // Llama a la función Feed() para agregar su contenido al DOM
+  const feedContainer = Feed();
+  document.body.appendChild(feedContainer);
+  
+  // Agrega el evento click al botón
+  const btnSubmit = document.getElementById('btn-submit');
+  const textPost = document.getElementById('text-post');
+  
+  btnSubmit.addEventListener('click', async () => { // Agrega "async" aquí
+    const textAreaPost = textPost.value;
+    console.log(textAreaPost);
+    
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        post: textAreaPost
+      });
+      console.log("funcionó");
+    } catch (e) {
+      console.error("Error", e);
+    }
+  });
 
 function Feed() {
-    const feedContainer = document.createElement('div');
-    feedContainer.innerHTML = `
-      <h4>Bienvenido</h4>
-      <button id="createPostButton">Nuevo post</button>
-    `;
-  
-    const createPostButton = feedContainer.querySelector('#createPostButton');
-    createPostButton.addEventListener('click', () => {
-        navigateTo('/createPost'); 
-    });
-
-    // Referencia a la ubicación de datos en tu base de datos
-    const dataRef = ref(db, 'ruta/a/la/data'); // Reemplaza
-
-    // Get para obtener los datos en esa ubicación
-    get(dataRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            for (const postId in data) {
-                if (data.hasOwnProperty(postId)) {
-                    const post = data[postId];
-                    const postElement = createPostElement(post);
-                    feedContainer.appendChild(postElement);
-                }
-            }
-        } else {
-            // No hay datos en esa ubicación
-        }
-    }).catch((error) => {
-        console.error('Error al obtener datos:', error);
-    });
-  
-    return feedContainer;
+  const feedContainer = document.createElement('article');
+  feedContainer.innerHTML = `
+  <br><textarea id="text-post">¿Qué cocinaste hoy?</textarea><br>
+  <button id="btn-submit">Post</button><br><br>
+  <section id="sectionP"></section> 
+`;
+  return feedContainer;
 }
 
 export default Feed;

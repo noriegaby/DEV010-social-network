@@ -9,15 +9,15 @@ export function home (navigateTo) {
     const inputEmail = createInput('email', 'Correo');
     const inputPass = createInput('password', 'Contraseña');
     const submitButton = createButton('Iniciar sesión', () => handleLogin());
-    submitButton.classList.add('btn-submit');///////
+    submitButton.classList.add('btn-submit');//clase al boton
     const googleLoginButton = createButtonWithIcon('Sign in with Google', 'G.png', () => handleGoogleLogin());
-    googleLoginButton.classList.add('google-login-button');//////////
+    googleLoginButton.classList.add('google-login-button');//clase al boton
     const createUserButton = createButton('Crear cuenta nueva', () => navigateTo('/createUser'));
-    createUserButton.classList.add('btn-createU');/////////
+    createUserButton.classList.add('btn-createU');//clase al boton
     const resetPasswordLink = document.createElement('a');
     resetPasswordLink.textContent = '¿Olvidaste tu contraseña?';
     resetPasswordLink.addEventListener('click', () => { navigateTo('/resPass'); });
-    resetPasswordLink.classList.add('reset-pass');
+    resetPasswordLink.classList.add('reset-pass');// Clase a <a>
     
 
 
@@ -92,7 +92,7 @@ export function home (navigateTo) {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             navigateTo('/feed');
-            console.log('Usuario autenticado con Google:', user);
+            alert('Correo autenticado con Google: ' + user.email);
 
         } catch (error) {
             console.error('Error de inicio de sesión con Google:', error);

@@ -82,6 +82,32 @@ button{
 .reset-pass:hover{
   text-decoration: underline;
 }
+#btn-submit{
+  width: 40px; 
+  height: 20px; 
+  font-size: 8px;
+  background-color: #007bff; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  float: right; /* Alinea el botón a la derecha */
+}
+#text-post{
+  width: 100%; /* Ancho del textarea al 100% del contenedor */
+  height: 100px; /* Altura fija del textarea */
+  padding: 10px; /* Espaciado interior para el contenido */
+  font-size: 14px; /* Tamaño de fuente */
+  border: 1px solid #ccc; /* Borde del textarea */
+  border-radius: 5px; /* Bordes redondeados */
+  resize: none;
+}
 
-
+/* Estilos para cuando el textarea está enfocado (seleccionado) */
+#text-post:focus {
+  border-color: #007bff; /* Cambia el color del borde al enfocar */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Agrega una sombra al enfocar */
+}
+#section-post{
+  border: 1px solid #530c0c; /* Borde */
+  width: 110%; 
+  height: 50px; /* Altura fija  */
+}
 
