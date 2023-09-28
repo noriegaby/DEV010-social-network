@@ -11,18 +11,15 @@ const auth = getAuth(app);
 import createUser from './createUser.js'; // Importa otros componentes que necesites
 import error from './error.js';
 import resPass from './resPass.js';
-import Feed from './feed.js'; // Importa tu componente Feed
-import Post from './post.js'; // Importa tu componente Post
-import CreatePost from './createUser.js'; // Importa tu componente CreatePost
+import feed from './feed.js'; // Importa tu componente Feed
+
 
 const routes = [
   { path: '/', component: home },
   { path: '/createUser', component: createUser },
   { path: '/error', component: error },
   { path: '/resPass', component: resPass },
-  { path: '/feed', component: Feed }, // Agrega una ruta para el feed
-  { path: '/post', component: Post }, // Agrega una ruta para ver un post
-  { path: '/create-post', component: CreatePost }, // Agrega una ruta para crear una nueva publicación
+  { path: '/feed', component: feed}, // Agrega una ruta para el feed
 ];
 
 const defaultRoute = '/';
