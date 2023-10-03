@@ -8,19 +8,19 @@ const app = initializeApp(firebaseConfig);
 // Obtén la autenticación de Firebase
 const auth = getAuth(app);
 
-import home from './home.js'; // Importa la función home como valor predeterminado
-import createUser from './createUser.js'; 
+import createUser from './createUser.js'; // Importa otros componentes que necesites
 import error from './error.js';
 import resPass from './resPass.js';
+import postFeed from './feed.js'; // Importa tu componente Feed
+
 
 const routes = [
   { path: '/', component: home },
   { path: '/createUser', component: createUser },
-  { path: '/error', component:error},
-  { path: '/resPass', component:resPass}
-
+  { path: '/error', component: error },
+  { path: '/resPass', component: resPass },
+  { path: '/feed', component: postFeed}, // Agrega una ruta para el feed
 ];
-
 
 const defaultRoute = '/';
 const root = document.getElementById('root');
@@ -49,7 +49,9 @@ window.onpopstate = () => {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Este código se ejecutará después de que se haya cargado completamente el DOM.
-  
-    navigateTo(window.location.pathname || defaultRoute);
-  });
+  // Este código se ejecutará después de que se haya cargado completamente el DOM.
+  navigateTo(window.location.pathname || defaultRoute);
+});
+
+// Importa la función home después de declarar navigateTo
+import { home } from './lib/index.js';

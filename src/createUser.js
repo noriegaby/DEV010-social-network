@@ -9,7 +9,9 @@ function createUser(navigateTo) {
   const inputEmail = document.createElement('input');
   const inputPass = document.createElement('input');
   const buttonRegister = document.createElement('button');
-  const errorParagraph = document.createElement('p');
+  buttonRegister.classList.add('btn-registro'); 
+  
+
 
   inputName.placeholder = 'Nombre';
   inputEmail.setAttribute('type', 'email');
@@ -17,9 +19,8 @@ function createUser(navigateTo) {
   inputPass.setAttribute('type', 'password');
   inputPass.placeholder = 'Contraseña';
 
-  title.textContent = 'Regístrate';
-  buttonRegister.textContent = 'Registrarse';
 
+  buttonRegister.textContent = 'Registrarse';
   buttonRegister.addEventListener('click', async (e) => {
     e.preventDefault(); // Evita que el formulario se envíe automáticamente
 
@@ -27,11 +28,15 @@ function createUser(navigateTo) {
     const email = inputEmail.value;
     const password = inputPass.value;
 
-    if (name === '' || email === '' || password === '') {
-      // Verifica si algún campo está vacío y muestra un mensaje de error
-      errorParagraph.textContent = 'Por favor, completa todos los campos.';
-      return;
-    }
+    if (email === '' || password === '') {
+      alert('Por favor, completa todos los campos.');
+    }else if (name.length < 3){  
+    alert('Por favor ingresa un nombre válido')
+    } else if (!isValidEmail(email)) {
+        alert('Por favor, introduce un correo electrónico válido.');
+    } else if (password.length < 8) {
+        alert('La contraseña debe tener al menos 8 caracteres');
+    } 
 
     try {
       const auth = getAuth();
@@ -56,8 +61,8 @@ function createUser(navigateTo) {
     navigateTo('/');
   });
 
-  form.append(inputName, document.createElement('br'), inputEmail, document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), buttonRegister);
-  section.append(title, form, document.createElement('br'), errorParagraph, buttonReturn);
+  form.append(inputName, document.createElement('br'), document.createElement('br'), inputEmail, document.createElement('br'), document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), buttonRegister);
+  section.append(document.createElement('br'),form, document.createElement('br'), buttonReturn);
 
   return section;
 }
