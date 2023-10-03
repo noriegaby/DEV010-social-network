@@ -11,7 +11,7 @@ const auth = getAuth(app);
 import createUser from './createUser.js'; // Importa otros componentes que necesites
 import error from './error.js';
 import resPass from './resPass.js';
-import feed from './feed.js'; // Importa tu componente Feed
+import postFeed from './feed.js'; // Importa tu componente Feed
 
 
 const routes = [
@@ -19,7 +19,7 @@ const routes = [
   { path: '/createUser', component: createUser },
   { path: '/error', component: error },
   { path: '/resPass', component: resPass },
-  { path: '/feed', component: feed}, // Agrega una ruta para el feed
+  { path: '/feed', component: postFeed}, // Agrega una ruta para el feed
 ];
 
 const defaultRoute = '/';
