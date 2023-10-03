@@ -1,5 +1,4 @@
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { db } from '../firebase.js';
 
 export function home (navigateTo) {
     const section = document.createElement('section');

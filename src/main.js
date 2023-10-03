@@ -1,25 +1,23 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { firebaseConfig } from './firebase.js'; // Importa la configuración de Firebase primero
+import { firebaseConfig } from './firebase.js';
 
 // Inicializa Firebase con la configuración
 const app = initializeApp(firebaseConfig);
-
-// Obtén la autenticación de Firebase
 const auth = getAuth(app);
 
-import createUser from './createUser.js'; // Importa otros componentes que necesites
+import createUser from './createUser.js';
 import error from './error.js';
 import resPass from './resPass.js';
-import postFeed from './feed.js'; // Importa tu componente Feed
-
+import initializeFeed from './feed.js';
+import { home } from './lib/index.js';
 
 const routes = [
   { path: '/', component: home },
   { path: '/createUser', component: createUser },
   { path: '/error', component: error },
   { path: '/resPass', component: resPass },
-  { path: '/feed', component: postFeed}, // Agrega una ruta para el feed
+  { path: '/feed', component: initializeFeed },
 ];
 
 const defaultRoute = '/';
@@ -29,11 +27,7 @@ function navigateTo(hash) {
   const route = routes.find((routeFound) => routeFound.path === hash);
   
   if (route && route.component) {
-    window.history.pushState(
-      {},
-      route.path,
-      window.location.origin + route.path,
-    );
+    window.history.pushState({}, route.path, window.location.origin + route.path);
 
     if (root.firstChild) {
       root.removeChild(root.firstChild);
@@ -49,9 +43,5 @@ window.onpopstate = () => {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Este código se ejecutará después de que se haya cargado completamente el DOM.
   navigateTo(window.location.pathname || defaultRoute);
 });
-
-// Importa la función home después de declarar navigateTo
-import { home } from './lib/index.js';
