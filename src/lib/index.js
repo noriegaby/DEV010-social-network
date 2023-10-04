@@ -30,7 +30,7 @@ export function home(navigateTo) {
   function createButton(text, onClick) {
     const button = document.createElement('button');
     button.textContent = text;
-    button.type = 'button'; // Agregar type="button" para evitar la recarga de la página
+    button.type = 'button'; // type="button" para evitar la recarga de la página
     button.addEventListener('click', onClick);
     button.classList.add('custom-button');
     return button;
