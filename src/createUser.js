@@ -2,7 +2,6 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 function createUser(navigateTo) {
   const section = document.createElement('section');
-  const title = document.createElement('h2');
   const buttonReturn = document.createElement('button');
   const form = document.createElement('form');
   const inputName = document.createElement('input');
@@ -20,6 +19,11 @@ function createUser(navigateTo) {
   inputPass.placeholder = 'Contraseña';
 
 
+  function isValidEmail(email) {
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+    
   buttonRegister.textContent = 'Registrarse';
   buttonRegister.addEventListener('click', async (e) => {
     e.preventDefault(); // Evita que el formulario se envíe automáticamente
@@ -41,19 +45,16 @@ function createUser(navigateTo) {
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-      // El usuario se ha registrado con éxito, puedes redirigir o actualizar la interfaz de usuario según sea necesario
+      console.log('Usuario registrado con éxito:', userCredential.user);
       alert('Usuario registrado con éxito:', userCredential.user);
-
-      // Limpia los campos del formulario
       inputName.value = '';
       inputEmail.value = '';
       inputPass.value = '';
     } catch (error) {
-      // Manejar errores de registro
       console.error('Error de registro:', error.message);
       errorParagraph.textContent = 'Error de registro: ' + error.message;
     }
+    
   });
 
   buttonReturn.textContent = 'Regresar';

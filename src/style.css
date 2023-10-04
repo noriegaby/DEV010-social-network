@@ -74,7 +74,6 @@ button{
     font-size: 14px; /* Tamaño de fuente */
   
 }
-
 .reset-pass{
   cursor: pointer;
   
@@ -82,39 +81,56 @@ button{
 .reset-pass:hover{
   text-decoration: underline;
 }
-#btn-submit,
-.delete-button,
-.edit-button{
+#btn-submit{
   width: 40px; 
   height: 20px; 
   font-size: 8px;
-  background-color: #007bff; /* Color de fondo */
+  background-color: #235930; /* Color de fondo */
   color: #fff; /* Color del texto */
   float: right; /* Alinea el botón a la derecha */
 }
 #text-post{
-  width: 100%; /* Ancho del textarea al 100% del contenedor */
+  width: 200px; /* Ancho del textarea al 100% del contenedor */
   height: 100px; /* Altura fija del textarea */
   padding: 10px; /* Espaciado interior para el contenido */
   font-size: 14px; /* Tamaño de fuente */
-  border: 1px solid #ccc; /* Borde del textarea */
+  border: 1px solid #235930; /* Borde del textarea */
   border-radius: 5px; /* Bordes redondeados */
   resize: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 }
 
 .section1{
-  border: thin solid #888;
-  width: 200px; 
-  height: 35px;
-  background-color:white;
+  width: 220px; 
+  height: auto;
+  background-color: white;
   font-size: 12px;
+  border: 1px solid #235930; /* Borde del textarea */
   border-radius: 5px; /* Bordes redondeados */
-
+  text-align: justify;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
 }
 #sectionP{
   border: 1px solid #faf9f9; /* Borde */
-  width: 110%; 
+  width: 100%; 
   height: 50px; /* Altura fija  */ 
 }
-
+.delete-button{
+  width: 30px; 
+  height: 15px; 
+  font-size: 7px;
+  background-color: red; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  float: right; /* Alinea el botón a la derecha */
+}
+.edit-button{
+  width: 30px; 
+  height: 15px; 
+  font-size: 7px;
+  background-color: #007bff; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  float: right; /* Alinea el botón a la derecha */
+}
 

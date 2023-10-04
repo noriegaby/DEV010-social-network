@@ -1,10 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+
 import { firebaseConfig } from './firebase.js';
 
 // Inicializa Firebase con la configuración
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+
 
 import createUser from './createUser.js';
 import error from './error.js';

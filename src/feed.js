@@ -5,12 +5,15 @@ function postFeed() {
   const feedContainer = document.createElement('article');
   feedContainer.innerHTML = `
     <br><textarea id="text-post" placeholder="¿Qué cocinaste hoy?"></textarea><br>
-    <button id="btn-submit">Post</button><br><br>
+    <button id="btn-submit">Publicar</button><br><br>
     <section id="sectionP"></section> 
   `;
+
+  // Agrega una clase al contenedor principal si lo necesitas
+  feedContainer.classList.add('feed-container');
+
   return feedContainer;
 }
-
 function initializeFeed() {
   const feedContainer = postFeed();
   const sectionP = feedContainer.querySelector('#sectionP');
@@ -54,62 +57,71 @@ function initializeFeed() {
       console.error("Error al publicar:", error);
     }
   });
-  // ... (código existente)
-  onSnapshot(orderedPostsQuery, (querySnapshot) => {
-    sectionP.innerHTML = '';
-    querySnapshot.forEach((docSnapshot) => {
-      const postData = docSnapshot.data(); // Cambio doc a docSnapshot
-      const postText = postData.post;
-      const postId = docSnapshot.id; // Cambio doc a docSnapshot
-      const postSection = document.createElement('section');
-      postSection.classList.add('section1');
-      
-      postSection.textContent = postText;
   
-      // Botón de Editar
-      const editButton = document.createElement('button');
-      editButton.textContent = 'Editar';
-      editButton.classList.add('edit-button');
-      editButton.addEventListener('click', async () => {
-        const newText = prompt('Edita tu publicación:', postText);
-        if (newText !== null) {
-          try {
-            const postRef = doc(db, 'post', postId); // Cambio doc a docSnapshot
-            await updateDoc(postRef, {
-              post: newText,
-              timestamp: serverTimestamp()
-            });
-            console.log("Publicación editada exitosamente");
-          } catch (error) {
-            console.error("Error al editar la publicación:", error);
-          }
-        }
-      });
-  
-      // Botón de Borrar
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Borrar';
-      deleteButton.classList.add('delete-button');
-      deleteButton.addEventListener('click', async () => {
-        if (confirm('¿Seguro que quieres borrar esta publicación?')) {
-          try {
-            const postRef = doc(db, 'post', postId); // Cambio doc a docSnapshot
-            await deleteDoc(postRef);
-            console.log("Publicación borrada exitosamente");
-          } catch (error) {
-            console.error("Error al borrar la publicación:", error);
-          }
-        }
-      });
-  
-      // Agregar botones al section
-      postSection.appendChild(editButton);
-      postSection.appendChild(deleteButton);
-  
-      sectionP.appendChild(postSection);
-    });
-  });
 
+onSnapshot(orderedPostsQuery, (querySnapshot) => {
+  sectionP.innerHTML = '';
+  querySnapshot.forEach((docSnapshot, index) => {
+    const postData = docSnapshot.data();
+    const postText = postData.post;
+    const postId = docSnapshot.id;
+    
+    const postSection = document.createElement('section');
+    postSection.classList.add('section1');
+    postSection.textContent = postText;
+
+    const lineBreak = document.createElement('br');
+
+
+    // Botón de Editar
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Editar';
+    editButton.classList.add('edit-button');
+    editButton.addEventListener('click', async () => {
+      const newText = prompt('Edita tu publicación:', postText);
+      if (newText !== null) {
+        try {
+          const postRef = doc(db, 'post', postId);
+          await updateDoc(postRef, {
+            post: newText,
+            timestamp: serverTimestamp()
+          });
+          console.log("Publicación editada exitosamente");
+        } catch (error) {
+          console.error("Error al editar la publicación:", error);
+        }
+      }
+    });
+
+    // Botón de Borrar
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Borrar';
+    deleteButton.classList.add('delete-button');
+    deleteButton.addEventListener('click', async () => {
+      if (confirm('¿Seguro que quieres borrar esta publicación?')) {
+        try {
+          const postRef = doc(db, 'post', postId);
+          await deleteDoc(postRef);
+          console.log("Publicación borrada exitosamente");
+        } catch (error) {
+          console.error("Error al borrar la publicación:", error);
+        }
+      }
+    });
+
+    // Contenedor para los botones
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+    buttonContainer.appendChild(editButton);
+    buttonContainer.appendChild(deleteButton);
+
+    // Agregar botones y texto al section
+    postSection.appendChild(buttonContainer);
+
+    sectionP.appendChild(postSection);
+    sectionP.appendChild(lineBreak);
+  });
+});
 
   return feedContainer;
 }
