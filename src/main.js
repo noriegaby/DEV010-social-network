@@ -23,7 +23,7 @@ const routes = [
 const defaultRoute = '/';
 const root = document.getElementById('root');
 
-function navigateTo(hash) {
+export function navigateTo(hash) {
   const route = routes.find((routeFound) => routeFound.path === hash);
   
   if (route && route.component) {
