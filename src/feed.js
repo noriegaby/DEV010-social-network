@@ -1,69 +1,127 @@
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
-import { db } from './firebase.js'; // Importa db desde donde esté definida
+import { collection, addDoc, onSnapshot, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy } from "firebase/firestore";
+import { db, app} from './firebase.js'; // Asegúrate de importar 'app' desde './firebase.js'
 
-// Define la función postFeed() primero
 function postFeed() {
   const feedContainer = document.createElement('article');
   feedContainer.innerHTML = `
-    <br><textarea id="text-post">¿Qué cocinaste hoy?</textarea><br>
-    <button id="btn-submit">Post</button><br><br>
+    <br><textarea id="text-post" placeholder="¿Qué cocinaste hoy?"></textarea><br>
+    <button id="btn-submit">Publicar</button><br><br>
     <section id="sectionP"></section> 
   `;
+
+  // Agrega una clase al contenedor principal si lo necesitas
+  feedContainer.classList.add('feed-container');
+
   return feedContainer;
 }
-
 function initializeFeed() {
-  // Llama a la función postFeed() para crear el feed
   const feedContainer = postFeed();
-
-  // Obtén una referencia a la sección donde mostrarás los mensajes
   const sectionP = feedContainer.querySelector('#sectionP');
-
-  // Agrega el evento click al botón
   const btnSubmit = feedContainer.querySelector('#btn-submit');
   const textPost = feedContainer.querySelector('#text-post');
+  const postCollection = collection(db, "post");
 
-  // Obtén una referencia a la colección en Firestore donde se almacenarán los mensajes
-  const messagesCollection = collection(db, "messages");
+  const orderedPostsQuery = query(postCollection, orderBy("timestamp", "desc")); // Ordena por fecha descendente
 
-  // Escucha en tiempo real los cambios en la colección de mensajes
-  onSnapshot(messagesCollection, (querySnapshot) => {
-    // Limpia la sección para evitar duplicaciones
+  onSnapshot(orderedPostsQuery, (querySnapshot) => {
     sectionP.innerHTML = '';
-
-    // Recorre los documentos en la colección y agrega los mensajes al feed
     querySnapshot.forEach((doc) => {
-      const messageData = doc.data();
-      const messageText = messageData.post;
-      const messageElement = document.createElement('p');
-      messageElement.textContent = messageText;
-      sectionP.appendChild(messageElement);
+      const postData = doc.data();
+      const postText = postData.post;
+      const postId = doc.id;
+      const postSection = document.createElement('section');
+
+        // Agrega una clase a todos los section
+    postSection.classList.add('section1'); 
+
+    postSection.textContent = postText;
+
+      sectionP.appendChild(postSection);
     });
   });
 
   btnSubmit.addEventListener('click', async () => {
     const textAreaPost = textPost.value;
-
     if (textAreaPost.trim() === '') {
-      alert('Por favor, ingresa un mensaje antes de publicar.');
+      alert('Por favor, ingresa algo antes de publicar.');
       return;
     }
-
     try {
-      // Agrega el mensaje a Firestore
-      await addDoc(messagesCollection, {
+      await addDoc(postCollection, {
         post: textAreaPost,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: serverTimestamp()
       });
-
-      // Limpia el campo de texto después de la publicación
       textPost.value = '';
-
       console.log("Publicación exitosa");
-    } catch (e) {
-      console.error("Error", e);
+    } catch (error) {
+      console.error("Error al publicar:", error);
     }
   });
+  
+
+onSnapshot(orderedPostsQuery, (querySnapshot) => {
+  sectionP.innerHTML = '';
+  querySnapshot.forEach((docSnapshot, index) => {
+    const postData = docSnapshot.data();
+    const postText = postData.post;
+    const postId = docSnapshot.id;
+    
+    const postSection = document.createElement('section');
+    postSection.classList.add('section1');
+    postSection.textContent = postText;
+
+    const lineBreak = document.createElement('br');
+
+
+    // Botón de Editar
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Editar';
+    editButton.classList.add('edit-button');
+    editButton.addEventListener('click', async () => {
+      const newText = prompt('Edita tu publicación:', postText);
+      if (newText !== null) {
+        try {
+          const postRef = doc(db, 'post', postId);
+          await updateDoc(postRef, {
+            post: newText,
+            timestamp: serverTimestamp()
+          });
+          console.log("Publicación editada exitosamente");
+        } catch (error) {
+          console.error("Error al editar la publicación:", error);
+        }
+      }
+    });
+
+    // Botón de Borrar
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Borrar';
+    deleteButton.classList.add('delete-button');
+    deleteButton.addEventListener('click', async () => {
+      if (confirm('¿Seguro que quieres borrar esta publicación?')) {
+        try {
+          const postRef = doc(db, 'post', postId);
+          await deleteDoc(postRef);
+          console.log("Publicación borrada exitosamente");
+        } catch (error) {
+          console.error("Error al borrar la publicación:", error);
+        }
+      }
+    });
+
+    // Contenedor para los botones
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+    buttonContainer.appendChild(editButton);
+    buttonContainer.appendChild(deleteButton);
+
+    // Agregar botones y texto al section
+    postSection.appendChild(buttonContainer);
+
+    sectionP.appendChild(postSection);
+    sectionP.appendChild(lineBreak);
+  });
+});
 
   return feedContainer;
 }
