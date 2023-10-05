@@ -1,4 +1,12 @@
-import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, fetchSignInMethodsForEmail } from 'firebase/auth';
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+  fetchSignInMethodsForEmail,
+} from 'firebase/auth';
 
 function createUser(navigateTo) {
   const section = document.createElement('section');
@@ -17,7 +25,7 @@ function createUser(navigateTo) {
   inputPass.placeholder = 'Contraseña';
 
   function isValidEmail(email) {
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
@@ -32,23 +40,23 @@ function createUser(navigateTo) {
     if (email === '' || password === '' || name === '') {
       alert('Por favor, completa todos los campos.');
       return;
-    } else if (name.length < 3) {
+    } if (name.length < 3) {
       alert('Por favor ingresa un nombre válido');
       return;
-    } else if (!isValidEmail(email)) {
+    } if (!isValidEmail(email)) {
       alert('Por favor, introduce un correo electrónico válido.');
       return;
-    } else if (password.length < 8) {
+    } if (password.length < 8) {
       alert('La contraseña debe tener al menos 8 caracteres');
       return;
     }
 
     try {
       const auth = getAuth();
-      
+
       // Verifica si el correo electrónico ya está registrado
       const methods = await fetchSignInMethodsForEmail(auth, email);
-      
+
       if (methods.length > 0) {
         alert('Este correo electrónico ya está registrado. Por favor, utiliza otro.');
         return;
@@ -73,7 +81,7 @@ function createUser(navigateTo) {
       navigateTo('/');
     } catch (error) {
       console.error('Error de registro:', error.message);
-      alert('Error de registro: ' + error.message); 
+      alert(`Error de registro: ${error.message}`);
     }
   });
 
