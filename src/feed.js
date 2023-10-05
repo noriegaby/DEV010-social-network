@@ -1,19 +1,82 @@
-import { collection, addDoc, onSnapshot, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy } from "firebase/firestore";
-import { db, getAuth } from './firebase.js';
+// Importa las funciones necesarias de Firebase Firestore y Firebase Auth
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  serverTimestamp,
+  deleteDoc,
+  doc,
+  updateDoc,
+  query,
+  orderBy,
+  arrayUnion,
+  arrayRemove
+} from "firebase/firestore";
+import { db, getAuth, signOut } from './firebase.js'; // Asegúrate de importar signOut
 
-
+// Función para crear la sección del feed
 function postFeed() {
   const feedContainer = document.createElement('article');
   feedContainer.innerHTML = `
+    <!-- Botón para cerrar sesión -->
+    <button id="btn-logout">Cerrar sesión</button><br><br><br>
     <textarea id="text-post" placeholder="¿Qué cocinaste hoy?"></textarea><br>
     <button id="btn-submit">Publicar</button><br><br>
-    <section id="sectionP"></section> 
+    <section id="sectionP"></section><br><br>
   `;
 
   feedContainer.classList.add('feed-container');
   return feedContainer;
 }
 
+// Función para crear el botón de "Me gusta" con funcionalidad
+function createLikeButton(postId, userLikes, user) {
+  const likeButton = document.createElement('button');
+  likeButton.classList.add('like-button');
+  likeButton.textContent = 'Me gusta';
+
+  let likedByUser = false;
+  if (userLikes && userLikes.includes(user.uid)) {
+    likedByUser = true;
+    likeButton.textContent = 'Te gusta';
+  }
+
+  likeButton.addEventListener('click', async () => {
+    if (likedByUser) {
+      // El usuario quiere quitar su "Me gusta"
+      try {
+        const postRef = doc(db, 'post', postId);
+        await updateDoc(postRef, {
+          likes: arrayRemove(user.uid)
+        });
+        likedByUser = false;
+        likeButton.textContent = 'Me gusta';
+        console.log('Me gusta quitado con éxito');
+      } catch (error) {
+        console.error('Error al quitar Me gusta:', error);
+      }
+    } else {
+      // El usuario quiere dar "Me gusta"
+      try {
+        const postRef = doc(db, 'post', postId);
+        await updateDoc(postRef, {
+          likes: arrayUnion(user.uid)
+        });
+        likedByUser = true;
+        likeButton.textContent = 'Te gusta';
+        console.log('Me gusta dado con éxito');
+          // Aplica el estilo al texto del botón
+        
+      } catch (error) {
+        console.error('Error al dar Me gusta:', error);
+      }
+    }
+  });
+
+  return likeButton;
+}
+
+// Función principal para inicializar el feed
 function initializeFeed() {
   const feedContainer = postFeed();
   const sectionP = feedContainer.querySelector('#sectionP');
@@ -22,7 +85,9 @@ function initializeFeed() {
   const postCollection = collection(db, "post");
   const user = getAuth().currentUser;
   const orderedPostsQuery = query(postCollection, orderBy("timestamp", "desc"));
-  
+  const btnLogout = feedContainer.querySelector('#btn-logout'); // Obtén el botón de cerrar sesión
+
+  // Escucha cambios en la base de datos y actualiza el feed
   onSnapshot(orderedPostsQuery, (querySnapshot) => {
     sectionP.innerHTML = '';
     querySnapshot.forEach((docSnapshot) => {
@@ -39,9 +104,10 @@ function initializeFeed() {
         postAuthor = postData.displayName;
       }
 
-      postSection.innerHTML = `<strong>${postAuthor}:</strong><br> ${postText}`;
+      postSection.innerHTML = `<strong>${postAuthor}:</strong><br> ${postText}<br><br>`;
 
       if (user && user.uid === ownerId) {
+        // Botones de edición y eliminación solo para el dueño del post
         const editButton = document.createElement('button');
         editButton.textContent = 'Editar';
         editButton.classList.add('edit-button');
@@ -83,6 +149,10 @@ function initializeFeed() {
         postSection.appendChild(buttonContainer);
       }
 
+      // Agregar botón de "Me gusta"
+      const likeButton = createLikeButton(postId, postData.likes, user);
+      postSection.appendChild(likeButton);
+
       sectionP.appendChild(postSection);
 
       // Agregar un salto de línea después de cada publicación
@@ -91,6 +161,19 @@ function initializeFeed() {
     });
   });
 
+  // Manejador para cerrar sesión
+  btnLogout.addEventListener('click', () => {
+    signOut(getAuth())
+      .then(() => {
+        // Redirige al usuario a la página de inicio de sesión o a donde desees
+        window.location.href = '/'; // Asegúrate de usar la URL correcta
+      })
+      .catch((error) => {
+        console.error('Error al cerrar sesión:', error);
+      });
+  });
+
+  // Manejador para publicar una nueva entrada en el feed
   btnSubmit.addEventListener('click', async () => {
     const textAreaPost = textPost.value;
     if (textAreaPost.trim() === '') {
@@ -105,13 +188,13 @@ function initializeFeed() {
       return;
     }
 
-
     try {
       await addDoc(postCollection, {
         post: textAreaPost,
         timestamp: serverTimestamp(),
         owner_uid: user.uid,
-        displayName: user.displayName
+        displayName: user.displayName,
+        likes: [] // Inicialmente, no hay ningún "Me gusta"
       });
       textPost.value = '';
       console.log("Publicación exitosa");
@@ -119,22 +202,6 @@ function initializeFeed() {
       console.error("Error al publicar:", error);
     }
   });
-  
-    
-  document.addEventListener('DOMContentLoaded', function () {
-    const auth = getAuth();
-    
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // Si el usuario está autenticado, redirige a la página de feed
-        window.location.href = '/feed'; // Asegúrate de usar la URL completa
-      } else {
-        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
-        window.location.href = '/';
-      }
-    });
-  });
-
 
   return feedContainer;
 }

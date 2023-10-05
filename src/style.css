@@ -72,6 +72,7 @@ button{
     cursor: pointer; /* Cambia el cursor al pasar por encima */
     border-radius: 5px; /* Bordes redondeados */
     font-size: 14px; /* Tamaño de fuente */
+    border: thin solid #f8f7f7;
   
 }
 .reset-pass{
@@ -88,6 +89,8 @@ button{
   background-color: #235930; /* Color de fondo */
   color: #fff; /* Color del texto */
   float: right; /* Alinea el botón a la derecha */
+  border: thin solid #f8f7f7;
+
 }
 #text-post{
   width: 200px; /* Ancho del textarea al 100% del contenedor */
@@ -121,16 +124,67 @@ button{
   width: 30px; 
   height: 15px; 
   font-size: 7px;
-  background-color: red; /* Color de fondo */
+  background-color: rgb(248, 93, 93); /* Color de fondo */
   color: #fff; /* Color del texto */
   float: right; /* Alinea el botón a la derecha */
+  border: thin solid #f8f7f7;
+}
+.delete-button:hover{
+
+  background-color: rgb(230, 8, 8); /* Color de fondo */
+
 }
 .edit-button{
   width: 30px; 
   height: 15px; 
   font-size: 7px;
-  background-color: #007bff; /* Color de fondo */
+  background-color: #5ba8fa; /* Color de fondo */
   color: #fff; /* Color del texto */
   float: right; /* Alinea el botón a la derecha */
+  border: thin solid #f8f7f7;
+}
+.edit-button:hover{
+
+  background-color: #034fa0; /* Color de fondo */
+
+}
+.like-button{
+  background-color: #6997f3;
+  width: 35px; 
+  height: 15px;
+  font-size: 6px;
+  color: rgb(12, 12, 12);
+  border: thin solid #f8f7f7;
+
+}
+.like-button:hover{
+  background-color: #f763a1;
+  color: rgb(255, 255, 255);
 }
 
+#btn-logout{
+  background-color: #f1f5f8;
+  width: 70px; 
+  height: 20px;
+  font-size: 10px;
+  color: black;
+  float: right;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  overflow: hidden;
+  border-radius: 5px;
+  border: none;
+  border: thin solid #f8f7f7;
+
+
+}
+/* Al posicionar el cursor el boton de cerrar sesión cambia de color */
+#btn-logout:hover{
+  border-radius: 5px;
+  padding-right: 24px;
+  padding-left:8px;  background: hsl(219, 92%, 49%);
+  color: white;
+  border: thin solid #f8f7f7;
+
+}
