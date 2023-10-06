@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 // Importa las funciones necesarias de Firebase Firestore y Firebase Auth
 import {
   collection,
@@ -10,9 +12,9 @@ import {
   query,
   orderBy,
   arrayUnion,
-  arrayRemove
-} from "firebase/firestore";
-import { db, getAuth, signOut } from './firebase.js'; // Asegúrate de importar signOut
+  arrayRemove,
+} from 'firebase/firestore';
+import { db, getAuth, signOut } from './firebase.js'; // importar signOut
 
 // Función para crear la sección del feed
 function postFeed() {
@@ -47,12 +49,14 @@ function createLikeButton(postId, userLikes, user) {
       try {
         const postRef = doc(db, 'post', postId);
         await updateDoc(postRef, {
-          likes: arrayRemove(user.uid)
+          likes: arrayRemove(user.uid),
         });
         likedByUser = false;
         likeButton.textContent = 'Me gusta';
+        // eslint-disable-next-line no-console
         console.log('Me gusta quitado con éxito');
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error al quitar Me gusta:', error);
       }
     } else {
@@ -60,14 +64,14 @@ function createLikeButton(postId, userLikes, user) {
       try {
         const postRef = doc(db, 'post', postId);
         await updateDoc(postRef, {
-          likes: arrayUnion(user.uid)
+          likes: arrayUnion(user.uid),
         });
         likedByUser = true;
         likeButton.textContent = 'Te gusta';
+        // eslint-disable-next-line no-console
         console.log('Me gusta dado con éxito');
-          // Aplica el estilo al texto del botón
-        
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error al dar Me gusta:', error);
       }
     }
@@ -76,16 +80,48 @@ function createLikeButton(postId, userLikes, user) {
   return likeButton;
 }
 
+// Función para publicar una nueva entrada en el feed
+export async function publishPost(postCollection, user, textPost) {
+  const textAreaPost = textPost.value;
+  if (textAreaPost.trim() === '') {
+    // eslint-disable-next-line no-alert
+    alert('Por favor, ingresa algo antes de publicar.');
+    return;
+  }
+
+  if (!user) {
+    // eslint-disable-next-line no-alert
+    alert('Debes iniciar sesión para publicar.');
+    // Redirige al usuario a la página de inicio de sesión
+    window.location.href = '/';
+    return;
+  }
+
+  try {
+    await addDoc(postCollection, {
+      post: textAreaPost,
+      timestamp: serverTimestamp(),
+      owner_uid: user.uid,
+      displayName: user.displayName,
+      likes: [], // Inicialmente, no hay ningún "Me gusta"
+    });
+    textPost.value = '';
+    console.log('Publicación exitosa');
+  } catch (error) {
+    console.error('Error al publicar:', error);
+  }
+}
+
 // Función principal para inicializar el feed
 function initializeFeed() {
   const feedContainer = postFeed();
   const sectionP = feedContainer.querySelector('#sectionP');
-  const btnSubmit = feedContainer.querySelector('#btn-submit');
   const textPost = feedContainer.querySelector('#text-post');
-  const postCollection = collection(db, "post");
+  const postCollection = collection(db, 'post');
   const user = getAuth().currentUser;
-  const orderedPostsQuery = query(postCollection, orderBy("timestamp", "desc"));
+  const orderedPostsQuery = query(postCollection, orderBy('timestamp', 'desc'));
   const btnLogout = feedContainer.querySelector('#btn-logout'); // Obtén el botón de cerrar sesión
+  const btnSubmit = feedContainer.querySelector('#btn-submit'); // Obtén el botón de enviar
 
   // Escucha cambios en la base de datos y actualiza el feed
   onSnapshot(orderedPostsQuery, (querySnapshot) => {
@@ -118,11 +154,11 @@ function initializeFeed() {
               const postRef = doc(db, 'post', postId);
               await updateDoc(postRef, {
                 post: newText,
-                timestamp: serverTimestamp()
+                timestamp: serverTimestamp(),
               });
-              console.log("Publicación editada exitosamente");
+              console.log('Publicación editada exitosamente');
             } catch (error) {
-              console.error("Error al editar la publicación:", error);
+              console.error('Error al editar la publicación:', error);
             }
           }
         });
@@ -131,13 +167,14 @@ function initializeFeed() {
         deleteButton.textContent = 'Borrar';
         deleteButton.classList.add('delete-button');
         deleteButton.addEventListener('click', async () => {
+          // eslint-disable-next-line no-restricted-globals, no-alert
           if (confirm('¿Seguro que quieres borrar esta publicación?')) {
             try {
               const postRef = doc(db, 'post', postId);
               await deleteDoc(postRef);
-              console.log("Publicación borrada exitosamente");
+              console.log('Publicación borrada exitosamente');
             } catch (error) {
-              console.error("Error al borrar la publicación:", error);
+              console.error('Error al borrar la publicación:', error);
             }
           }
         });
@@ -175,32 +212,7 @@ function initializeFeed() {
 
   // Manejador para publicar una nueva entrada en el feed
   btnSubmit.addEventListener('click', async () => {
-    const textAreaPost = textPost.value;
-    if (textAreaPost.trim() === '') {
-      alert('Por favor, ingresa algo antes de publicar.');
-      return;
-    }
-
-    if (!user) {
-      alert('Debes iniciar sesión para publicar.');
-      // Redirige al usuario a la página de inicio de sesión
-      window.location.href = '/';
-      return;
-    }
-
-    try {
-      await addDoc(postCollection, {
-        post: textAreaPost,
-        timestamp: serverTimestamp(),
-        owner_uid: user.uid,
-        displayName: user.displayName,
-        likes: [] // Inicialmente, no hay ningún "Me gusta"
-      });
-      textPost.value = '';
-      console.log("Publicación exitosa");
-    } catch (error) {
-      console.error("Error al publicar:", error);
-    }
+    publishPost(postCollection, user, textPost);
   });
 
   return feedContainer;

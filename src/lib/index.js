@@ -1,4 +1,12 @@
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+/* eslint-disable no-use-before-define */
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from 'firebase/auth';
 
 export function home(navigateTo) {
   const section = document.createElement('section');
@@ -35,7 +43,6 @@ export function home(navigateTo) {
     button.classList.add('custom-button');
     return button;
   }
-  
 
   function createButtonWithIcon(text, iconSrc, onClick) {
     const button = createButton(text, onClick);
@@ -48,7 +55,7 @@ export function home(navigateTo) {
 
   // Función para validar el formato del correo electrónico
   function isValidEmail(email) {
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
@@ -60,46 +67,46 @@ export function home(navigateTo) {
     if (email === '' || password === '') {
       alert('Por favor, completa todos los campos.');
       return;
-    } else if (!isValidEmail(email)) {
+    } if (!isValidEmail(email)) {
       alert('Por favor, introduce un correo electrónico válido.');
       return;
-    } else if (password.length < 8) {
+    } if (password.length < 8) {
       alert('La contraseña debe tener al menos 8 caracteres');
       return;
     }
 
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log('Usuario autenticado con éxito');
-        const user = userCredential.user;
-        alert('Usuario ha iniciado sesión con éxito: ' + user.email);
-        
-        // Redirige al usuario a la página de feed
-        navigateTo('/feed');
-        } catch (error) {
-        console.error('Error de inicio de sesión:', error);
-        console.log('Error de inicio de sesión:', error.message);
-      }
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Usuario autenticado con éxito');
+      const user = userCredential.user;
+      alert(`Usuario ha iniciado sesión con éxito: ${user.email}`);
+
+      // Redirige al usuario a la página de feed
+      navigateTo('/feed');
+    } catch (error) {
+      console.error('Error de inicio de sesión:', error);
+      console.log('Error de inicio de sesión:', error.message);
     }
+  }
 
   // Función Sign in with Google
 
-    async function handleGoogleLogin() {
-        const auth = getAuth();
-        const provider = new GoogleAuthProvider();
-      
-        try {
-          const result = await signInWithPopup(auth, provider);
-          const user = result.user;
-          navigateTo('/feed'); // Redirige al usuario a la página de feed
-          alert('Correo autenticado con Google: ' + user.email);
-        } catch (error) {
-          console.error('Error de inicio de sesión con Google:', error);
-          throw error;
-        }
-      }
+  async function handleGoogleLogin() {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
 
-  form.append(inputEmail, document.createElement('br'), document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), submitButton, document.createElement('br'), document.createElement('br'), document.createElement('hr'),);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      navigateTo('/feed'); // Redirige al usuario a la página de feed
+      alert(`Correo autenticado con Google: ${user.email}`);
+    } catch (error) {
+      console.error('Error de inicio de sesión con Google:', error);
+      throw error;
+    }
+  }
+
+  form.append(inputEmail, document.createElement('br'), document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), submitButton, document.createElement('br'), document.createElement('br'), document.createElement('hr'));
 
   section.append(document.createElement('br'), form, document.createElement('br'), createUserButton, document.createElement('br'), googleLoginButton, document.createElement('br'), resetPasswordLink);
 

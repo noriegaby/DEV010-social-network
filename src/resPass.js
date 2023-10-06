@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+/* eslint-disable no-shadow */
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 function resPass(navigateTo) {
@@ -8,8 +11,7 @@ function resPass(navigateTo) {
   const form = document.createElement('form');
   const inputEmail = document.createElement('input');
   const buttonRest = document.createElement('button');
-  buttonRest.classList.add('btn-rest');//// Clase al btn
- 
+  buttonRest.classList.add('btn-rest');/// / Clase al btn
 
   title.textContent = 'Ingresa tu correo para restablecer tu contraseña';
 
@@ -17,33 +19,31 @@ function resPass(navigateTo) {
   inputEmail.placeholder = 'Correo';
 
   buttonRest.textContent = 'Restablecer';
-  
 
   buttonRest.addEventListener('click', async (e) => {
     e.preventDefault(); // Evita que el formulario se envíe automáticamente
 
     const email = inputEmail.value;
 
-        // Función para validar el formato del correo electrónico
-        function isValidEmail(email) {
-          let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return emailRegex.test(email);
-      }
+    // Función para validar el formato del correo electrónico
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
     if (email === '') {
       // Verifica si el campo está vacío y muestra un mensaje de error
-      alert ('Por favor, ingresa tu correo.');
+      alert('Por favor, ingresa tu correo.');
       return;
-    } else if (!isValidEmail(email)) {
+    } if (!isValidEmail(email)) {
       alert('Por favor, introduce un correo electrónico válido.');
     }
     try {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
-      alert ('Se ha enviado un correo para restablecer la contraseña.');
+      alert('Se ha enviado un correo para restablecer la contraseña.');
     } catch (error) {
       // Maneja los errores de Firebase aquí
       console.error('Error al restablecer la contraseña:', error);
-      
     }
   });
 
@@ -52,8 +52,8 @@ function resPass(navigateTo) {
     navigateTo('/');
   });
 
-  form.append(inputEmail,document.createElement('br'),document.createElement('br'), buttonRest);
-  section.append(title, form ,document.createElement('br'), buttonReturn);
+  form.append(inputEmail, document.createElement('br'), document.createElement('br'), buttonRest);
+  section.append(title, form, document.createElement('br'), buttonReturn);
 
   return section;
 }
