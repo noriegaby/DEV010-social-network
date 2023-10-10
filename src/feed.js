@@ -33,14 +33,19 @@ function postFeed() {
 
 // Función para crear el botón de "Me gusta" con funcionalidad
 function createLikeButton(postId, userLikes, user) {
+
   const likeButton = document.createElement('button');
+  const likeCount = document.createElement('p');
   likeButton.classList.add('like-button');
   likeButton.textContent = 'Me gusta';
-
+  likeCount.textContent = 0;
   let likedByUser = false;
   if (userLikes && userLikes.includes(user.uid)) {
     likedByUser = true;
     likeButton.textContent = 'Te gusta';
+  }
+  if (userLikes) {
+    likeCount.textContent = userLikes.length;
   }
 
   likeButton.addEventListener('click', async () => {
@@ -77,7 +82,7 @@ function createLikeButton(postId, userLikes, user) {
     }
   });
 
-  return likeButton;
+  return [likeButton, likeCount];
 }
 
 // Función para publicar una nueva entrada en el feed
@@ -187,9 +192,9 @@ function initializeFeed() {
       }
 
       // Agregar botón de "Me gusta"
-      const likeButton = createLikeButton(postId, postData.likes, user);
+      const [likeButton, likeCount] = createLikeButton(postId, postData.likes, user);
       postSection.appendChild(likeButton);
-
+      postSection.appendChild(likeCount);
       sectionP.appendChild(postSection);
 
       // Agregar un salto de línea después de cada publicación
