@@ -193,8 +193,12 @@ function initializeFeed() {
 
       // Agregar botón de "Me gusta"
       const [likeButton, likeCount] = createLikeButton(postId, postData.likes, user);
-      postSection.appendChild(likeButton);
-      postSection.appendChild(likeCount);
+      
+      const likesArea = document.createElement('div');
+      likesArea.style.display = 'flex';
+      likesArea.appendChild(likeButton);
+      likesArea.appendChild(likeCount);
+      postSection.appendChild(likesArea);
       sectionP.appendChild(postSection);
 
       // Agregar un salto de línea después de cada publicación
