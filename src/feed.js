@@ -33,7 +33,6 @@ function postFeed() {
 
 // Función para crear el botón de "Me gusta" con funcionalidad
 function createLikeButton(postId, userLikes, user) {
-
   const likeButton = document.createElement('button');
   const likeCount = document.createElement('p');
   likeButton.classList.add('like-button');
@@ -193,11 +192,10 @@ function initializeFeed() {
 
       // Agregar botón de "Me gusta"
       const [likeButton, likeCount] = createLikeButton(postId, postData.likes, user);
-      
       const likesArea = document.createElement('div');
       likesArea.style.display = 'flex';
-      likesArea.appendChild(likeButton);
       likesArea.appendChild(likeCount);
+      likesArea.appendChild(likeButton);
       postSection.appendChild(likesArea);
       sectionP.appendChild(postSection);
 
