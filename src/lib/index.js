@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 /* eslint-disable no-use-before-define */
+
+// Importa las funciones necesarias de Firebase Auth
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -8,26 +10,40 @@ import {
   GoogleAuthProvider,
 } from 'firebase/auth';
 
+// Definición de la función home
 export function home(navigateTo) {
+  // Crea un elemento de sección para el contenido
   const section = document.createElement('section');
   section.classList.add('container');
 
+  // Crea un formulario para el inicio de sesión
   const form = document.createElement('form');
+
+  // Crea campos de entrada para correo y contraseña
   const inputEmail = createInput('email', 'Correo');
   const inputPass = createInput('password', 'Contraseña');
+
+  // Crea un botón para enviar el formulario de inicio de sesión
   const submitButton = createButton('Iniciar sesión', handleLogin);
-  submitButton.classList.add('btn-submit'); // clase al botón
+  submitButton.classList.add('btn-submit'); // Agrega una clase al botón
+
+  // Crea un botón para iniciar sesión con Google
   const googleLoginButton = createButtonWithIcon('Sign in with Google', 'G.png', () => handleGoogleLogin());
-  googleLoginButton.classList.add('google-login-button'); // clase al botón
+  googleLoginButton.classList.add('google-login-button'); // Agrega una clase al botón
+
+  // Crea un botón para redirigir a la página de registro de usuario
   const createUserButton = createButton('Crear cuenta nueva', () => navigateTo('/createUser'));
-  createUserButton.classList.add('btn-createU'); // clase al botón
+  createUserButton.classList.add('btn-createU'); // Agrega una clase al botón
+
+  // Crea un enlace para restablecer la contraseña
   const resetPasswordLink = document.createElement('a');
   resetPasswordLink.textContent = '¿Olvidaste tu contraseña?';
   resetPasswordLink.addEventListener('click', () => {
     navigateTo('/resPass');
   });
-  resetPasswordLink.classList.add('reset-pass'); // Clase a <a>
+  resetPasswordLink.classList.add('reset-pass'); // Agrega una clase al enlace
 
+  // Función para crear un campo de entrada
   function createInput(type, placeholder) {
     const input = document.createElement('input');
     input.setAttribute('type', type);
@@ -35,15 +51,17 @@ export function home(navigateTo) {
     return input;
   }
 
+  // Función para crear un botón con un texto y una función de clic
   function createButton(text, onClick) {
     const button = document.createElement('button');
     button.textContent = text;
-    button.type = 'button'; // type="button" para evitar la recarga de la página
+    button.type = 'button'; // Configura el tipo de botón para evitar la recarga de la página
     button.addEventListener('click', onClick);
     button.classList.add('custom-button');
     return button;
   }
 
+  // Función para crear un botón con texto y una imagen (icono)
   function createButtonWithIcon(text, iconSrc, onClick) {
     const button = createButton(text, onClick);
     const imageElement = document.createElement('img');
@@ -58,7 +76,7 @@ export function home(navigateTo) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
-
+  // Función para manejar el inicio de sesión con correo y contraseña
   async function handleLogin() {
     const auth = getAuth();
     const email = inputEmail.value;
@@ -90,7 +108,6 @@ export function home(navigateTo) {
   }
 
   // Función Sign in with Google
-
   async function handleGoogleLogin() {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -105,9 +122,9 @@ export function home(navigateTo) {
       throw error;
     }
   }
-
+  // Agrega elementos al formulario
   form.append(inputEmail, document.createElement('br'), document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), submitButton, document.createElement('br'), document.createElement('br'), document.createElement('hr'));
-
+  // Agrega elementos al elemento de sección
   section.append(document.createElement('br'), form, document.createElement('br'), createUserButton, document.createElement('br'), googleLoginButton, document.createElement('br'), resetPasswordLink);
 
   return section;

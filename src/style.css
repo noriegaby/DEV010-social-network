@@ -1,189 +1,203 @@
-
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-family: serif;
-    font-weight: normal;
+/* Estilos para el contenedor principal */
+.container {
+  display: flex;                  /* Establece el contenedor como un flex container */
+  flex-direction: column;         /* Coloca los elementos en una columna */
+  align-items: center;            /* Centra horizontalmente los elementos en el contenedor */
+  justify-content: center;        /* Centra verticalmente los elementos en el contenedor */
+  text-align: center;            /* Establece el texto en el centro del contenedor */
+  font-family: serif;             /* Selecciona la fuente 'serif' para el texto */
+  font-weight: normal;            /* Establece el peso de fuente como 'normal' */
 }
 
+
+/* Estilos para las imágenes */
 img {
-    max-width: 200px;
-    width: 80%;
-    height: auto;
+  max-width: 200px;  /* Limita el ancho máximo de las imágenes*/
+  width: 80%;        /* Establece el ancho del contenedor */
+  height: auto;      /* Mantiene la relación de aspecto, evita distorsiones */
 }
 
-button{
+/* Estilos para los botones genéricos */
+button {
   display: inline-block;
-  background: white;
-  color: #444;
-  width: 200px; 
-  height: 45px; 
-  border: thin solid #888;
-  box-shadow: 1px 1px 1px grey;
-  white-space: nowrap;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 5px; /* Bordes redondeados */
+  background: white;  /* Fondo blanco */
+  color: #444;        /* Color de texto */
+  width: 200px;       /* Ancho del botón */
+  height: 45px;       /* Altura del botón */
+  border: thin solid #888;  /* Borde delgado con color gris */
+  box-shadow: 1px 1px 1px grey;  /* Sombra ligera */
+  white-space: nowrap;   /* No permite el desbordamiento de texto */
+  cursor: pointer;       /* Indica que es un elemento interactivo */
+  font-size: 14px;       /* Tamaño de fuente */
+  border-radius: 5px;    /* Bordes redondeados */
 }
 
-  span.label {
-    font-family: serif;
-    font-weight: normal;   
+/* Estilos para elementos span con la clase 'label' */
+span.label {
+  font-family: serif;
+  font-weight: normal;
 }
-/* En tu archivo de estilo CSS */
+
+/* Estilos para el botón con la clase 'google-login-button' */
 .google-login-button {
-    /* Estilos para el botón */
-    background-color:#FFFFFF;
-    font-size: 14px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: #444;
-    padding: 10px 20px;
-    cursor: pointer;
-    display: flex; /* Hace que los elementos hijos se coloquen en fila */
-    align-items: center; /* Centra verticalmente los elementos en el botón */
-  }
-  
-  /* Estilos para la imagen dentro del botón */
-  .google-login-icon {
-    width: 18px; /* Ajusta el tamaño según tus necesidades */
-    height: 18px; /* Ajusta el tamaño según tus necesidades */
-    margin-right: 8px; /* Espacio a la derecha de la imagen */
-  }
-  input{
-    border: thin solid #888;
-    width: 200px; 
-    height: 35px;
-    background-color: rgb(250, 250, 247);
-    font-size: 12px;
-    border-radius: 5px; /* Bordes redondeados */
-  
-  }
+  background-color: #FFFFFF; /* Fondo blanco */
+  font-size: 14px;          /* Tamaño de fuente */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Fuentes */
+  color: #444;              /* Color de texto */
+  padding: 10px 20px;       /* Espaciado interno */
+  cursor: pointer;          /* Indica que es un elemento interactivo */
+  display: flex;            /* Coloca los elementos hijos en fila */
+  align-items: center;      /* Centra verticalmente los elementos en el botón */
+}
 
-  .btn-registro,
-  .btn-submit,
-  .btn-rest{
-    background-color: #007bff; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    padding: 10px 20px; /* Relleno (padding) interno del botón */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
-    border-radius: 5px; /* Bordes redondeados */
-    font-size: 14px; /* Tamaño de fuente */
-    border: thin solid #f8f7f7;
-  
+/* Estilos para la imagen dentro del botón con la clase 'google-login-icon' */
+.google-login-icon {
+  width: 18px;     /* Ajusta el tamaño de la imagen */
+  height: 18px;    /* Ajusta el tamaño de la imagen */
+  margin-right: 8px;  /* Espacio a la derecha de la imagen */
 }
-.reset-pass{
-  cursor: pointer;
-  
-}
-.reset-pass:hover{
-  text-decoration: underline;
-}
-#btn-submit{
-  width: 40px; 
-  height: 20px; 
-  font-size: 8px;
-  background-color: #235930; /* Color de fondo */
-  color: #fff; /* Color del texto */
-  float: right; /* Alinea el botón a la derecha */
-  border: thin solid #f8f7f7;
 
+/* Estilos para los campos de entrada de texto */
+input {
+  border: thin solid #888;  /* Borde delgado con color gris */
+  width: 200px;             /* Ancho del campo de entrada */
+  height: 35px;             /* Altura del campo de entrada */
+  background-color: rgb(250, 250, 247);  /* Color de fondo */
+  font-size: 12px;          /* Tamaño de fuente */
+  border-radius: 5px;       /* Bordes redondeados */
 }
-#text-post{
-  width: 200px; /* Ancho del textarea al 100% del contenedor */
+
+/* Estilos para botones con clases específicas 'btn-registro', 'btn-submit', 'btn-rest' */
+.btn-registro,
+.btn-submit,
+.btn-rest {
+  background-color: #007bff;  /* Color de fondo azul */
+  color: #fff;                /* Color de texto blanco */
+  padding: 10px 20px;         /* Espaciado interno */
+  cursor: pointer;            /* Indica que es un elemento interactivo */
+  border-radius: 5px;         /* Bordes redondeados */
+  font-size: 14px;            /* Tamaño de fuente */
+  border: thin solid #f8f7f7; /* Borde delgado con color gris */
+}
+
+/* Estilos para el enlace de restablecer contraseña con la clase 'reset-pass' */
+.reset-pass {
+  cursor: pointer;  /* Indica que es un elemento interactivo */
+}
+
+/* Estilos para el enlace de restablecer contraseña con la clase 'reset-pass' al pasar el cursor sobre él */
+.reset-pass:hover {
+  text-decoration: underline;  /* Subraya el texto al pasar el cursor sobre él */
+}
+
+/* Estilos para el botón con la id 'btn-submit' */
+#btn-submit {
+  width: 40px;        /* Ancho del botón */
+  height: 20px;       /* Altura del botón */
+  font-size: 8px;     /* Tamaño de fuente */
+  background-color: #235930;  /* Color de fondo */
+  color: #fff;        /* Color de texto */
+  float: right;       /* Alinea el botón a la derecha */
+  border: thin solid #f8f7f7;  /* Borde delgado con color gris */
+}
+
+/* Estilos para el campo de texto con la id 'text-post' */
+#text-post {
+  width: 200px;  /* Ancho del textarea al 100% del contenedor */
   height: 100px; /* Altura fija del textarea */
-  padding: 10px; /* Espaciado interior para el contenido */
-  font-size: 14px; /* Tamaño de fuente */
-  border: 1px solid #235930; /* Borde del textarea */
-  border-radius: 5px; /* Bordes redondeados */
-  resize: none;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+  padding: 10px;  /* Espaciado interior para el contenido */
+  font-size: 14px;  /* Tamaño de fuente */
+  border: 1px solid #235930;  /* Borde con color verde */
+  border-radius: 5px;  /* Bordes redondeados */
+  resize: none;        /* Evita que se redimensione */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  /* Fuentes */
+}
+/* Estilos para la sección 1 */
+.section1 {
+  width: 220px;                  /* Ancho del contenedor */
+  height: auto;                   /* Altura automática para ajustar al contenido */
+  background-color: white;       /* Color de fondo */
+  font-size: 12px;               /* Tamaño de fuente */
+  border: 1px solid #235930;      /* Borde del elemento con un color */
+  border-radius: 5px;            /* Bordes redondeados */
+  text-align: justify;           /* Alineación justificada del texto */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Selección de fuente */
 }
 
-.section1{
-  width: 220px; 
-  height: auto;
-  background-color: white;
-  font-size: 12px;
-  border: 1px solid #235930; /* Borde del textarea */
-  border-radius: 5px; /* Bordes redondeados */
-  text-align: justify;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
+/* Estilos para el elemento con ID 'sectionP' */
+#sectionP {
+  border: 1px solid #faf9f9;      /* Borde del elemento con un color */
+  width: 100%;                   /* Ancho del elemento al 100% de su contenedor */
+  height: 50px;                  /* Altura fija del elemento */
 }
-#sectionP{
-  border: 1px solid #faf9f9; /* Borde */
-  width: 100%; 
-  height: 50px; /* Altura fija  */ 
-}
-.delete-button{
-  width: 30px; 
-  height: 15px; 
-  font-size: 7px;
+
+/* Estilos para el botón 'delete-button' y su estado hover */
+.delete-button {
+  width: 30px;                   /* Ancho del botón */
+  height: 15px;                  /* Altura del botón */
+  font-size: 7px;                /* Tamaño de fuente */
   background-color: rgb(248, 93, 93); /* Color de fondo */
-  color: #fff; /* Color del texto */
-  float: right; /* Alinea el botón a la derecha */
-  border: thin solid #f8f7f7;
-}
-.delete-button:hover{
-
-  background-color: rgb(230, 8, 8); /* Color de fondo */
+  color: #fff;                   /* Color del texto */
+  float: right;                  /* Alinea el botón a la derecha */
+  border: thin solid #f8f7f7;    /* Borde del botón */
 
 }
-.edit-button{
-  width: 30px; 
-  height: 15px; 
-  font-size: 7px;
-  background-color: #5ba8fa; /* Color de fondo */
-  color: #fff; /* Color del texto */
-  float: right; /* Alinea el botón a la derecha */
-  border: thin solid #f8f7f7;
-}
-.edit-button:hover{
 
-  background-color: #034fa0; /* Color de fondo */
-
-}
-.like-button{
-  background-color: #6997f3;
-  width: 35px; 
-  height: 15px;
-  font-size: 6px;
-  color: rgb(12, 12, 12);
-  border: thin solid #f8f7f7;
-
-}
-.like-button:hover{
-  background-color: #f763a1;
-  color: rgb(255, 255, 255);
+.delete-button:hover {
+  background-color: rgb(230, 8, 8); /* Cambia el color de fondo al pasar el cursor sobre el botón */
 }
 
-#btn-logout{
-  background-color: #f1f5f8;
-  width: 70px; 
-  height: 20px;
-  font-size: 10px;
-  color: black;
-  float: right;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  outline: none;
-  overflow: hidden;
-  border-radius: 5px;
-  border: none;
-  border: thin solid #f8f7f7;
-
-
+/* Estilos para el botón 'edit-button' y su estado hover */
+.edit-button {
+  width: 30px;                   /* Ancho del botón */
+  height: 15px;                  /* Altura del botón */
+  font-size: 7px;                /* Tamaño de fuente */
+  background-color: #5ba8fa;     /* Color de fondo */
+  color: #fff;                   /* Color del texto */
+  float: right;                  /* Alinea el botón a la derecha */
+  border: thin solid #f8f7f7;    /* Borde del botón */
 }
-/* Al posicionar el cursor el boton de cerrar sesión cambia de color */
-#btn-logout:hover{
-  border-radius: 5px;
-  padding-right: 24px;
-  padding-left:8px;  background: hsl(219, 92%, 49%);
-  color: white;
-  border: thin solid #f8f7f7;
 
+.edit-button:hover {
+  background-color: #034fa0;    /* Cambia el color de fondo al pasar el cursor sobre el botón */
+}
+
+/* Estilos para el botón 'like-button' y su estado hover */
+.like-button {
+  background-color: #6997f3;     /* Color de fondo */
+  width: 35px;                   /* Ancho del botón */
+  height: 15px;                  /* Altura del botón */
+  font-size: 6px;                /* Tamaño de fuente */
+  color: rgb(12, 12, 12);        /* Color del texto */
+  border: thin solid #f8f7f7;    /* Borde del botón */
+}
+
+.like-button:hover {
+  background-color: #f763a1;    /* Cambia el color de fondo al pasar el cursor sobre el botón */
+  color: rgb(255, 255, 255);     /* Cambia el color del texto al pasar el cursor sobre el botón */
+}
+
+/* Estilos para el botón con ID 'btn-logout' y su estado hover */
+#btn-logout {
+  background-color: #f1f5f8;     /* Color de fondo */
+  width: 70px;                   /* Ancho del botón */
+  height: 20px;                  /* Altura del botón */
+  font-size: 10px;               /* Tamaño de fuente */
+  color: black;                  /* Color del texto */
+  float: right;                  /* Alinea el botón a la derecha */
+  cursor: pointer;               /* Cambia el cursor al pasar por encima */
+  transition: all 0.3s ease;      /* Transición suave de todos los atributos */
+  outline: none;                 /* Elimina el contorno al hacer clic */
+  overflow: hidden;              /* Oculta el contenido que desborda el botón */
+  border-radius: 5px;            /* Bordes redondeados */
+  border: thin solid #f8f7f7;    /* Borde del botón */
+}
+
+#btn-logout:hover {
+  border-radius: 5px;             /* Agrega bordes redondeados al pasar el cursor sobre el botón */
+  padding-right: 24px;            /* Ajusta el espaciado a la derecha del botón al pasar el cursor */
+  padding-left: 8px;              /* Ajusta el espaciado a la izquierda del botón al pasar el cursor */
+  background: hsl(219, 92%, 49%); /* Cambia el color de fondo al pasar el cursor sobre el botón */
+  color: white;                  /* Cambia el color del texto al pasar el cursor sobre el botón */
+  border: thin solid #f8f7f7;    /* Borde del botón */
 }

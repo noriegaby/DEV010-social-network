@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
+
+// Importa las funciones necesarias de Firebase Auth
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -8,27 +10,40 @@ import {
   fetchSignInMethodsForEmail,
 } from 'firebase/auth';
 
+// Definición de la función createUser
 function createUser(navigateTo) {
+  // Crea un elemento de sección
   const section = document.createElement('section');
+
+  // Crea un botón de retorno a la página de inicio
   const buttonReturn = document.createElement('button');
+
+  // Crea un formulario para el registro de usuario
   const form = document.createElement('form');
+
+  // Crea campos de entrada para nombre, correo electrónico y contraseña
   const inputName = document.createElement('input');
   const inputEmail = document.createElement('input');
   const inputPass = document.createElement('input');
-  const buttonRegister = document.createElement('button');
-  buttonRegister.classList.add('btn-registro');
 
+  // Crea un botón para registrar al usuario
+  const buttonRegister = document.createElement('button');
+  buttonRegister.classList.add('btn-registro'); // Agrega una clase al botón
+
+  // Configura los placeholders de los campos de entrada
   inputName.placeholder = 'Nombre';
   inputEmail.setAttribute('type', 'email');
   inputEmail.placeholder = 'Correo';
   inputPass.setAttribute('type', 'password');
   inputPass.placeholder = 'Contraseña';
 
+  // Función para validar el formato del correo electrónico
   function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
+  // Configura el texto del botón de registro y su manejador de evento
   buttonRegister.textContent = 'Registrarse';
   buttonRegister.addEventListener('click', async (e) => {
     e.preventDefault(); // Evita que el formulario se envíe automáticamente
@@ -85,15 +100,21 @@ function createUser(navigateTo) {
     }
   });
 
+  // Configura el texto del botón de retorno y su manejador de evento
   buttonReturn.textContent = 'Regresar';
   buttonReturn.addEventListener('click', () => {
     navigateTo('/');
   });
 
+  // Agrega elementos al formulario
   form.append(inputName, document.createElement('br'), document.createElement('br'), inputEmail, document.createElement('br'), document.createElement('br'), inputPass, document.createElement('br'), document.createElement('br'), buttonRegister);
+
+  // Agrega elementos a la sección
   section.append(document.createElement('br'), form, document.createElement('br'), buttonReturn);
 
+  // Retorna la sección que contiene el formulario de registro de usuario
   return section;
 }
 
+// Exporta la función createUser
 export default createUser;
